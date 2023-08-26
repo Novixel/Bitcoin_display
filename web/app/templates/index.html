@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coinbase Price</title>
+    <style>
+        /* Your CSS styling from the second template */
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        .label {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        /* Additional styling for the container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Additional styling for the text */
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            font-size: 18px;
+        }
+
+        #price-placeholder {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 100px;
+            font-weight: bold;
+            color: green; /* Default color */
+        }
+    </style>
+</head>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ product }}</h1>
+        <p><span id="price-placeholder">{{ current_price }}</span></p>
+    </div>
+    <script>
+        const pricePlaceholder = document.getElementById('price-placeholder');
+        
+        function updatePrice() {
+            fetch('/get_price')
+                .then(response => response.json())
+                .then(data => {
+                    const { current_price, color } = data;
+                    pricePlaceholder.textContent = current_price;
+                    pricePlaceholder.style.color = color;
+                });
+        }
+
+        updatePrice();
+        setInterval(updatePrice, 1000);  // Update every second
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Add your CSS styling here */
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        .label {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" class="label">
+        Loading...
+    </div>
+    
+    <script>
+        const root = document.getElementById('root');
+        const product = "BTC-USD";
+        let oldPrice = 0;
+
+        function getNewPrice() {
+            // Simulating fetching new price
+            return Math.random() * 10000;
+        }
+
+        async function updatePrice() {
+            const newPrice = getNewPrice();
+
+            if (oldPrice > newPrice) {
+                root.style.color = "red";
+            } else {
+                root.style.color = "green";
+            }
+
+            root.innerText = `${product}\n${newPrice}`;
+            oldPrice = newPrice;
+
+            document.title = `${product} ${newPrice}`;
+        }
+
+        async function callBase() {
+            while (true) {
+                await updatePrice();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+        }
+
+        async function main() {
+            await callBase();
+        }
+
+        main();
+    </script>
+</body>
+</html>
